@@ -1,0 +1,14 @@
+version: "3"
+services:
+  secure-api-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.local
+    command: pm2-docker process.json
+    ports:
+      - 9080:9080
+    volumes:
+      - .:/app
+
+volumes:
+  node_modules:

@@ -1,0 +1,156 @@
+{
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"ISaveResponse": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"encryptedDataKey": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"encryptedDataKey"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IUser": {
+				"properties": {
+					"firstname": {
+						"type": "string"
+					},
+					"lastname": {
+						"type": "string"
+					},
+					"passport": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"firstname",
+					"lastname",
+					"passport"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ISaveRequest": {
+				"properties": {
+					"payload": {
+						"$ref": "#/components/schemas/IUser"
+					},
+					"publicKey": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"payload",
+					"publicKey"
+				],
+				"type": "object",
+				"additionalProperties": false
+			}
+		},
+		"securitySchemes": {}
+	},
+	"info": {
+		"title": "secure-api-example",
+		"version": "1.0.0",
+		"license": {
+			"name": "MIT"
+		},
+		"contact": {
+			"name": "Ivan Zmerzlyi ",
+			"email": "ivan.zmerzlyi@gmail.com"
+		}
+	},
+	"openapi": "3.0.0",
+	"paths": {
+		"/api": {
+			"post": {
+				"operationId": "Save",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ISaveResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "Save information for encrypted saving.\nSupply payload and public key.",
+				"tags": [
+					"API"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ISaveRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/{id}": {
+			"get": {
+				"operationId": "Get",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IUser"
+								}
+							}
+						}
+					}
+				},
+				"description": "Retrieves decrypted information.\nSupply the data key which was returned in response to save request.",
+				"tags": [
+					"API"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "key",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/"
+		}
+	]
+}

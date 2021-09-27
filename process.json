@@ -1,0 +1,21 @@
+{
+  "apps": [
+    {
+      "name": "app",
+      "script": "npm",
+      "args": "run dev",
+      "watch": true,
+      "ignore_watch": [
+        ".idea",
+        "node_modules",
+        ".git",
+        "src/routes.ts",
+        "src/swagger.json"
+      ],
+      "watch_options": {
+        "followSymlinks": false,
+        "usePolling": true
+      }
+    }
+  ]
+}
